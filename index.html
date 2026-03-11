@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APEX — Digital Marketing Agency</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #0a0a0f;
+      --chalk:  #f5f3ee;
+      --warm:   #f0ebe0;
+      --accent: #e8521a;
+      --gold:   #d4a843;
+      --muted:  #7a7870;
+      --card:   #ffffff;
+      --border: rgba(10,10,15,.08);
+      --r: 14px;
+      --nav-h: 72px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--chalk);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--chalk); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+    /* ─── NOISE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-size: 200px;
+      opacity: .4;
+    }
+
+    section, nav, footer { position: relative; z-index: 1; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw;
+      transition: background .4s, box-shadow .4s;
+    }
+    nav.scrolled {
+      background: rgba(245,243,238,.92);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      letter-spacing: -.03em;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex; align-items: center; gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .9rem; font-weight: 500; letter-spacing: .02em;
+      color: var(--muted); text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta {
+      background: var(--ink); color: var(--chalk) !important;
+      padding: .55rem 1.3rem; border-radius: 100px;
+      transition: background .2s, transform .2s !important;
+    }
+    .nav-cta:hover { background: var(--accent) !important; transform: translateY(-1px); }
+
+    /* Hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--ink); border-radius: 2px; transition: .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: rgba(245,243,238,.97); backdrop-filter: blur(20px);
+      padding: 2rem 5vw 3rem; z-index: 99;
+      border-bottom: 1px solid var(--border);
+      transform: translateY(-20px); opacity: 0;
+      transition: transform .3s, opacity .3s;
+    }
+    .mobile-menu.open { transform: translateY(0); opacity: 1; display: block; }
+    .mobile-menu a {
+      display: block; font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 1.6rem; color: var(--ink); text-decoration: none;
+      padding: .6rem 0; border-bottom: 1px solid var(--border);
+      transition: color .2s;
+    }
+    .mobile-menu a:hover { color: var(--accent); }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      padding: calc(var(--nav-h) + 6rem) 5vw 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      background: var(--chalk);
+      overflow: hidden;
+    }
+    .hero-content { max-width: 580px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .8rem; font-weight: 500; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 24px; height: 2px; background: var(--accent);
+    }
+    .hero-title {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      line-height: 1.0; letter-spacing: -.04em;
+      color: var(--ink); margin-bottom: 1.5rem;
+    }
+    .hero-title em {
+      font-style: normal; color: var(--accent);
+      position: relative; display: inline-block;
+    }
+    .hero-title em::after {
+      content: '';
+      position: absolute; left: 0; bottom: .05em; right: 0;
+      height: .08em; background: var(--accent); border-radius: 2px;
+      transform: scaleX(0); transform-origin: left;
+      animation: underline-in .6s 1s ease forwards;
+    }
+    @keyframes underline-in { to { transform: scaleX(1); } }
+    .hero-sub {
+      font-size: 1.1rem; font-weight: 300; line-height: 1.7;
+      color: var(--muted); max-width: 420px; margin-bottom: 2.5rem;
+    }
+    .hero-actions { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--accent); color: #fff;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: .95rem;
+      padding: .9rem 2rem; border-radius: 100px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: transform .25s, box-shadow .25s, background .25s;
+      box-shadow: 0 4px 24px rgba(232,82,26,.3);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(232,82,26,.4); background: #d4410e; }
+    .btn-primary svg { transition: transform .25s; }
+    .btn-primary:hover svg { transform: translateX(4px); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-weight: 500; font-size: .95rem; color: var(--ink);
+      text-decoration: none; padding: .9rem 0;
+      transition: color .2s;
+    }
+    .btn-ghost:hover { color: var(--accent); }
+    .btn-ghost::after { content: '→'; font-size: 1.1rem; }
+
+    /* Hero visual */
+    .hero-visual {
+      position: relative; height: 520px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-blob {
+      position: absolute; width: 480px; height: 480px; border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, #ffd4b8 0%, #f0c89a 40%, #e8d5b0 70%, transparent 100%);
+      filter: blur(2px);
+      animation: blob-float 8s ease-in-out infinite;
+    }
+    @keyframes blob-float {
+      0%,100% { border-radius: 60% 40% 70% 30% / 50% 60% 40% 70%; transform: rotate(0deg) scale(1); }
+      33%     { border-radius: 40% 60% 30% 70% / 70% 40% 60% 30%; transform: rotate(5deg) scale(1.03); }
+      66%     { border-radius: 70% 30% 50% 50% / 30% 70% 30% 70%; transform: rotate(-3deg) scale(.97); }
+    }
+    .hero-card {
+      position: relative; z-index: 2;
+      background: var(--card); border-radius: 20px;
+      padding: 2rem 2.5rem; width: 320px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.08), 0 1px 0 var(--border);
+      animation: card-entrance .8s .4s both ease;
+    }
+    @keyframes card-entrance {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-card-label {
+      font-size: .75rem; font-weight: 500; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 1rem;
+    }
+    .hero-stat {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 3rem;
+      letter-spacing: -.04em; color: var(--ink); margin-bottom: .2rem;
+    }
+    .hero-stat span { color: var(--accent); }
+    .hero-card-sub { font-size: .85rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .hero-sparkline {
+      display: flex; align-items: flex-end; gap: 4px; height: 50px;
+    }
+    .bar {
+      flex: 1; background: var(--warm); border-radius: 4px 4px 0 0;
+      transition: background .3s;
+      animation: bar-grow .6s ease both;
+    }
+    .bar:hover { background: var(--accent); }
+    @keyframes bar-grow { from { transform: scaleY(0); transform-origin: bottom; } to { transform: scaleY(1); } }
+    .bar:nth-child(1)  { height: 30%; animation-delay: .6s; }
+    .bar:nth-child(2)  { height: 55%; animation-delay: .65s; }
+    .bar:nth-child(3)  { height: 45%; animation-delay: .7s; }
+    .bar:nth-child(4)  { height: 70%; animation-delay: .75s; }
+    .bar:nth-child(5)  { height: 60%; animation-delay: .8s; }
+    .bar:nth-child(6)  { height: 80%; animation-delay: .85s; }
+    .bar:nth-child(7)  { height: 90%; animation-delay: .9s; }
+    .bar:nth-child(8)  { height: 75%; animation-delay: .95s; background: var(--accent); }
+
+    .hero-badge {
+      position: absolute; top: -20px; right: -20px; z-index: 3;
+      background: var(--gold); color: var(--ink);
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: .75rem;
+      padding: .7rem 1rem; border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(212,168,67,.35);
+      animation: badge-bounce 3s ease-in-out infinite 1.2s;
+    }
+    @keyframes badge-bounce {
+      0%,100% { transform: translateY(0) rotate(-2deg); }
+      50%      { transform: translateY(-6px) rotate(2deg); }
+    }
+
+    /* Floating chips */
+    .hero-chip {
+      position: absolute; z-index: 3;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 100px; padding: .5rem 1rem;
+      font-size: .8rem; font-weight: 500; color: var(--ink);
+      box-shadow: 0 4px 16px rgba(0,0,0,.06);
+      display: flex; align-items: center; gap: .4rem;
+      animation: chip-float 5s ease-in-out infinite;
+    }
+    .hero-chip.c1 { bottom: 60px; left: -30px; animation-delay: 0s; }
+    .hero-chip.c2 { top: 40px; right: -40px; animation-delay: 1.5s; }
+    @keyframes chip-float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+    .chip-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; }
+
+    /* ─── MARQUEE ─── */
+    .marquee-wrap {
+      overflow: hidden; background: var(--ink); padding: 1.2rem 0;
+      border-top: 1px solid rgba(255,255,255,.05);
+    }
+    .marquee-track {
+      display: flex; gap: 3rem; width: max-content;
+      animation: marquee 22s linear infinite;
+    }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee-item {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: rgba(255,255,255,.3); white-space: nowrap;
+      transition: color .3s;
+    }
+    .marquee-item.accent { color: var(--accent); }
+
+    /* ─── SECTION BASE ─── */
+    section { padding: 7rem 5vw; }
+    .section-label {
+      font-size: .8rem; font-weight: 500; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 1rem; display: flex; align-items: center; gap: .6rem;
+    }
+    .section-label::before { content: ''; display: block; width: 20px; height: 2px; background: var(--accent); }
+    .section-title {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -.04em;
+      line-height: 1.1; color: var(--ink);
+    }
+    .section-sub {
+      font-size: 1.05rem; font-weight: 300; line-height: 1.75;
+      color: var(--muted); max-width: 540px;
+    }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--ink); overflow: hidden; }
+    #about .section-label { color: var(--gold); }
+    #about .section-label::before { background: var(--gold); }
+    #about .section-title { color: var(--chalk); }
+    #about .section-sub { color: rgba(245,243,238,.5); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+    }
+    .about-left {}
+    .about-desc { margin-top: 2rem; }
+    .about-stats {
+      margin-top: 3rem;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 2.4rem; letter-spacing: -.04em; color: var(--chalk);
+    }
+    .stat-num span { color: var(--accent); }
+    .stat-label { font-size: .85rem; color: rgba(245,243,238,.4); margin-top: .2rem; }
+    .about-right {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+    }
+    .about-card {
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07);
+      border-radius: var(--r); padding: 1.8rem;
+      transition: background .3s, border-color .3s, transform .3s;
+    }
+    .about-card:hover {
+      background: rgba(255,255,255,.07);
+      border-color: rgba(232,82,26,.3);
+      transform: translateY(-4px);
+    }
+    .about-card:first-child { grid-column: span 2; }
+    .about-card-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(232,82,26,.15);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem; font-size: 1.3rem;
+    }
+    .about-card h3 {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 1rem; color: var(--chalk); margin-bottom: .5rem;
+    }
+    .about-card p { font-size: .85rem; color: rgba(245,243,238,.4); line-height: 1.6; }
+
+    /* ─── SERVICES ─── */
+    #services { background: var(--warm); }
+    .services-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem;
+    }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--card); border-radius: var(--r);
+      padding: 2.5rem 2rem; position: relative; overflow: hidden;
+      border: 1px solid var(--border);
+      transition: transform .3s, box-shadow .3s;
+      cursor: default;
+    }
+    .service-card::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(232,82,26,0) 0%, rgba(232,82,26,.04) 100%);
+      opacity: 0; transition: opacity .3s;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,.1); }
+    .service-card:hover::after { opacity: 1; }
+    .service-num {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 4rem;
+      letter-spacing: -.06em; color: var(--border);
+      position: absolute; top: 1rem; right: 1.5rem;
+      line-height: 1; pointer-events: none;
+      transition: color .3s;
+    }
+    .service-card:hover .service-num { color: rgba(232,82,26,.12); }
+    .service-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: var(--warm); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 1.5rem;
+      transition: background .3s, transform .3s;
+    }
+    .service-card:hover .service-icon { background: rgba(232,82,26,.1); transform: scale(1.08); }
+    .service-card h3 {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.15rem;
+      color: var(--ink); margin-bottom: .8rem;
+    }
+    .service-card p { font-size: .9rem; color: var(--muted); line-height: 1.7; }
+    .service-tag {
+      display: inline-block; margin-top: 1.2rem;
+      font-size: .75rem; font-weight: 500; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--accent);
+      border-bottom: 1px solid currentColor; padding-bottom: 1px;
+    }
+
+    /* ─── TESTIMONIALS ─── */
+    #reviews { background: var(--chalk); }
+    .reviews-header { text-align: center; margin-bottom: 4rem; }
+    .reviews-header .section-label { justify-content: center; }
+    .reviews-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .review-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 2rem;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .review-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,.08); }
+    .review-card.featured {
+      background: var(--ink); border-color: var(--ink);
+      grid-row: span 1;
+    }
+    .stars { display: flex; gap: 3px; margin-bottom: 1.2rem; }
+    .star { color: var(--gold); font-size: 1rem; }
+    .review-text {
+      font-size: .95rem; line-height: 1.75; color: var(--muted);
+      margin-bottom: 1.5rem; font-style: italic;
+    }
+    .review-card.featured .review-text { color: rgba(245,243,238,.6); }
+    .review-author { display: flex; align-items: center; gap: .8rem; }
+    .review-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: .9rem; color: #fff; flex-shrink: 0;
+    }
+    .review-name {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: .9rem; color: var(--ink);
+    }
+    .review-card.featured .review-name { color: var(--chalk); }
+    .review-role { font-size: .8rem; color: var(--muted); }
+    .review-card.featured .review-role { color: rgba(245,243,238,.35); }
+    .review-quote-mark {
+      font-family: Georgia, serif; font-size: 5rem; line-height: 1;
+      color: rgba(232,82,26,.15); float: right; margin-top: -1rem;
+      font-weight: 400;
+    }
+    .review-card.featured .review-quote-mark { color: rgba(255,255,255,.08); }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--ink); overflow: hidden; }
+    .contact-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
+    }
+    #contact .section-title { color: var(--chalk); }
+    #contact .section-sub { color: rgba(245,243,238,.45); margin-top: 1.5rem; }
+    .contact-perks { margin-top: 3rem; display: flex; flex-direction: column; gap: 1.2rem; }
+    .perk {
+      display: flex; align-items: center; gap: 1rem;
+      font-size: .9rem; color: rgba(245,243,238,.5);
+    }
+    .perk-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .contact-form {
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07);
+      border-radius: 20px; padding: 2.5rem;
+    }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    label {
+      display: block; font-size: .8rem; font-weight: 500;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: rgba(245,243,238,.4); margin-bottom: .5rem;
+    }
+    input, textarea, select {
+      width: 100%; background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1); border-radius: 10px;
+      color: var(--chalk); font-family: 'DM Sans', sans-serif;
+      font-size: .95rem; padding: .85rem 1rem;
+      outline: none; transition: border-color .2s, background .2s;
+      -webkit-appearance: none;
+    }
+    input::placeholder, textarea::placeholder { color: rgba(245,243,238,.25); }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--accent); background: rgba(255,255,255,.09);
+    }
+    textarea { resize: vertical; min-height: 120px; }
+    select option { background: #1a1a1f; }
+    .form-submit {
+      width: 100%; margin-top: .8rem;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+    }
+    .form-note {
+      text-align: center; margin-top: 1rem;
+      font-size: .8rem; color: rgba(245,243,238,.25);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #060608; padding: 3rem 5vw;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,.05);
+    }
+    .footer-logo { color: var(--chalk); font-size: 1.2rem; }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a {
+      font-size: .85rem; color: rgba(255,255,255,.3);
+      text-decoration: none; transition: color .2s;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,.7); }
+    .footer-copy { font-size: .8rem; color: rgba(255,255,255,.2); }
+
+    /* ─── FADE-IN ANIMATION ─── */
+    .fade-in { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .reviews-grid  { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      #hero { grid-template-columns: 1fr; padding-top: calc(var(--nav-h) + 4rem); }
+      .hero-visual { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-right { grid-template-columns: 1fr; }
+      .about-card:first-child { grid-column: span 1; }
+      .about-stats { grid-template-columns: repeat(3,1fr); gap: 1rem; }
+      .stat-num { font-size: 1.8rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .services-header { flex-direction: column; align-items: flex-start; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      section { padding: 5rem 5vw; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">APEX<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Over ons</a></li>
+    <li><a href="#services">Diensten</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact" class="nav-cta">Gratis gesprek</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about"    onclick="closeMenu()">Over ons</a>
+  <a href="#services" onclick="closeMenu()">Diensten</a>
+  <a href="#reviews"  onclick="closeMenu()">Reviews</a>
+  <a href="#contact"  onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Digital Marketing Agency</div>
+    <h1 class="hero-title">
+      Groei je business met <em>slimme</em> marketing
+    </h1>
+    <p class="hero-sub">
+      Wij helpen ambitieuze bedrijven online zichtbaar te worden, meer leads te genereren en duurzame omzetgroei te realiseren.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        Gratis strategie-sessie
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#services" class="btn-ghost">Bekijk diensten</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-blob"></div>
+    <div class="hero-card">
+      <div class="hero-card-label">Gemiddelde ROI klanten</div>
+      <div class="hero-stat">3.<span>8</span>×</div>
+      <div class="hero-card-sub">rendement op marketing-investering</div>
+      <div class="hero-sparkline">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div><div class="bar"></div>
+      </div>
+      <div class="hero-badge">+127% Q4 2024 ↑</div>
+    </div>
+    <div class="hero-chip c1"><span class="chip-dot"></span> 42 leads vandaag</div>
+    <div class="hero-chip c2">⚡ 97 Pagina-score</div>
+  </div>
+</section>
+
+<!-- ─── MARQUEE ─── -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item accent">SEO</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Google Ads</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item accent">Social Media</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Content Marketing</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item accent">E-mail Automation</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Webdesign</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item accent">Analytics</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Conversie-optimalisatie</span>
+    <span class="marquee-item">·</span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item accent">SEO</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Google Ads</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item accent">Social Media</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Content Marketing</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item accent">E-mail Automation</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Webdesign</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item accent">Analytics</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Conversie-optimalisatie</span>
+    <span class="marquee-item">·</span>
+  </div>
+</div>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-left fade-in">
+      <div class="section-label">Over APEX</div>
+      <h2 class="section-title">Wij zijn meer dan een bureau</h2>
+      <div class="about-desc section-sub">
+        Sinds 2017 helpen wij bedrijven van elke omvang hun online aanwezigheid te transformeren. Geen generieke aanpak — wij bouwen strategieën die écht passen bij jouw merk, markt en doelgroep.
+      </div>
+      <div class="about-stats">
+        <div class="stat-item">
+          <div class="stat-num">180<span>+</span></div>
+          <div class="stat-label">Tevreden klanten</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">7<span>jr</span></div>
+          <div class="stat-label">Ervaring</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">€12<span>M</span></div>
+          <div class="stat-label">Gegenereerde omzet</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-right fade-in">
+      <div class="about-card">
+        <div class="about-card-icon">🎯</div>
+        <h3>Data-gedreven aanpak</h3>
+        <p>Elke beslissing onderbouwen wij met harde data en meetbare KPI's. Geen buikgevoel, maar bewezen strategieën.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🚀</div>
+        <h3>Snelle resultaten</h3>
+        <p>Binnen 30 dagen zichtbaar verschil in jouw online performance.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🤝</div>
+        <h3>Persoonlijk contact</h3>
+        <p>Eén vaste contactpersoon, directe communicatie en volledige transparantie.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICES ─── -->
+<section id="services">
+  <div class="services-header fade-in">
+    <div>
+      <div class="section-label">Wat wij doen</div>
+      <h2 class="section-title">Onze diensten</h2>
+    </div>
+    <p class="section-sub">Alles wat je nodig hebt om online te groeien, onder één dak.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-in">
+      <div class="service-num">01</div>
+      <div class="service-icon">🔍</div>
+      <h3>Zoekmachine-optimalisatie</h3>
+      <p>Wij zorgen dat jouw website bovenaan Google staat voor de zoektermen die er echt toe doen. Technische SEO, contentmarketing en linkbuilding gecombineerd.</p>
+      <span class="service-tag">Organisch verkeer</span>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-num">02</div>
+      <div class="service-icon">📢</div>
+      <h3>Google & Meta Ads</h3>
+      <p>Gerichte advertentiecampagnes die zichtbaar en winstgevend zijn. Wij beheren jouw budget alsof het ons eigen geld is.</p>
+      <span class="service-tag">Betaald verkeer</span>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-num">03</div>
+      <div class="service-icon">📱</div>
+      <h3>Social Media Marketing</h3>
+      <p>Van strategie tot dagelijkse uitvoering. Wij bouwen een loyale community rondom jouw merk op Instagram, LinkedIn en TikTok.</p>
+      <span class="service-tag">Brand awareness</span>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-num">04</div>
+      <div class="service-icon">✉️</div>
+      <h3>E-mail Automation</h3>
+      <p>Slimme e-mailflows die potentiële klanten automatisch door de salesfunnel begeleiden — 24/7, zonder moeite van jou.</p>
+      <span class="service-tag">Leadnurturing</span>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-num">05</div>
+      <div class="service-icon">💻</div>
+      <h3>Webdesign & Conversie</h3>
+      <p>Snelle, mooie websites die bezoekers omzetten in betalende klanten. UX-gedreven design met focus op ROI.</p>
+      <span class="service-tag">Conversie-optimalisatie</span>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-num">06</div>
+      <div class="service-icon">📊</div>
+      <h3>Analytics & Rapportage</h3>
+      <p>Volledig inzicht in je marketing-prestaties via heldere dashboards en maandelijkse rapportages met concrete aanbevelingen.</p>
+      <span class="service-tag">Data & inzichten</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── REVIEWS ─── -->
+<section id="reviews">
+  <div class="reviews-header fade-in">
+    <div class="section-label">Klantreviews</div>
+    <h2 class="section-title">Wat onze klanten zeggen</h2>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card featured fade-in">
+      <div class="review-quote-mark">"</div>
+      <div class="stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="review-text">
+        "APEX heeft onze online omzet in zes maanden tijd meer dan verdubbeld. Hun data-gedreven aanpak en persoonlijke betrokkenheid zijn echt uniek. Ze denken écht mee als een partner, niet als een leverancier."
+      </p>
+      <div class="review-author">
+        <div class="review-avatar">MV</div>
+        <div>
+          <div class="review-name">Martijn van der Berg</div>
+          <div class="review-role">CEO, TechRetail BV</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card fade-in">
+      <div class="review-quote-mark">"</div>
+      <div class="stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="review-text">
+        "Dankzij de SEO-strategie van APEX staan we nu op positie 1 voor onze belangrijkste zoektermen. Het organisch verkeer is met 340% gestegen!"
+      </p>
+      <div class="review-author">
+        <div class="review-avatar">SH</div>
+        <div>
+          <div class="review-name">Sophie Hendriksen</div>
+          <div class="review-role">Marketing Manager, Floramo</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card fade-in">
+      <div class="review-quote-mark">"</div>
+      <div class="stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="review-text">
+        "Professioneel, transparant en resultaatgericht. Onze Google Ads campagnes draaien nu met een ROAS van 8,4. Echt aanrader!"
+      </p>
+      <div class="review-author">
+        <div class="review-avatar">RK</div>
+        <div>
+          <div class="review-name">Roos Kuijpers</div>
+          <div class="review-role">Eigenaar, Studio Roos</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card fade-in">
+      <div class="review-quote-mark">"</div>
+      <div class="stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="review-text">
+        "Eindelijk een bureau dat begrijpt wat wij nodig hebben. De e-mail automations genereren maandelijks tientallen extra leads op de automatische piloot."
+      </p>
+      <div class="review-author">
+        <div class="review-avatar">JP</div>
+        <div>
+          <div class="review-name">Jesse Peters</div>
+          <div class="review-role">Founder, GreenScale</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card fade-in">
+      <div class="review-quote-mark">"</div>
+      <div class="stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="review-text">
+        "Onze nieuwe website converteert drie keer beter dan de oude. Snelle oplevering, mooi design, en echt gericht op omzetgroei."
+      </p>
+      <div class="review-author">
+        <div class="review-avatar">LW</div>
+        <div>
+          <div class="review-name">Laura Willems</div>
+          <div class="review-role">COO, Novo Medical</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card fade-in">
+      <div class="review-quote-mark">"</div>
+      <div class="stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="review-text">
+        "De maandelijkse rapportages zijn helder en volledig. Ik weet altijd precies waar mijn budget naartoe gaat en wat het oplevert."
+      </p>
+      <div class="review-author">
+        <div class="review-avatar">TN</div>
+        <div>
+          <div class="review-name">Thomas Nieuwenhuis</div>
+          <div class="review-role">DGA, Bouwgroep Noord</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="fade-in">
+      <div class="section-label" style="color:var(--gold)"><span style="background:var(--gold);display:inline-block;width:20px;height:2px;margin-right:.6rem;vertical-align:middle"></span>Neem contact op</div>
+      <h2 class="section-title" style="color:var(--chalk)">Klaar om te groeien?</h2>
+      <p class="section-sub">Plan een gratis strategiegesprek van 30 minuten. Geen verplichtingen — wij laten je zien wat er mogelijk is voor jouw bedrijf.</p>
+      <div class="contact-perks">
+        <div class="perk"><div class="perk-icon">✅</div> Gratis en vrijblijvend adviesgesprek</div>
+        <div class="perk"><div class="perk-icon">⚡</div> Reactie binnen 24 uur</div>
+        <div class="perk"><div class="perk-icon">📋</div> Persoonlijk groeiplan op maat</div>
+        <div class="perk"><div class="perk-icon">🔒</div> 100% vertrouwelijk</div>
+      </div>
+    </div>
+    <div class="contact-form fade-in">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fname">Voornaam</label>
+          <input type="text" id="fname" placeholder="Jan" />
+        </div>
+        <div class="form-group">
+          <label for="lname">Achternaam</label>
+          <input type="text" id="lname" placeholder="de Vries" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">E-mailadres</label>
+        <input type="email" id="email" placeholder="jan@bedrijf.nl" />
+      </div>
+      <div class="form-group">
+        <label for="phone">Telefoonnummer</label>
+        <input type="tel" id="phone" placeholder="+31 6 12345678" />
+      </div>
+      <div class="form-group">
+        <label for="service">Ik ben geïnteresseerd in</label>
+        <select id="service">
+          <option value="">Kies een dienst…</option>
+          <option>SEO / Zoekmachine-optimalisatie</option>
+          <option>Google & Meta Ads</option>
+          <option>Social Media Marketing</option>
+          <option>E-mail Automation</option>
+          <option>Webdesign & Conversie</option>
+          <option>Alles / Weet nog niet</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="msg">Jouw situatie (optioneel)</label>
+        <textarea id="msg" placeholder="Vertel kort iets over je bedrijf en uitdaging…"></textarea>
+      </div>
+      <button class="btn-primary form-submit" onclick="handleSubmit(event)">
+        Verstuur aanvraag
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <p class="form-note">🔒 Jouw gegevens worden nooit gedeeld met derden.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <a href="#hero" class="nav-logo footer-logo">APEX<span style="color:var(--accent)">.</span></a>
+  <div class="footer-links">
+    <a href="#about">Over ons</a>
+    <a href="#services">Diensten</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <p class="footer-copy">© 2025 APEX Digital. Alle rechten voorbehouden.</p>
+</footer>
+
+<script>
+  // ─── NAV SCROLL
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ─── HAMBURGER
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+
+  // ─── FADE IN ON SCROLL
+  const faders = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = `${i * 0.07}s`;
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  faders.forEach(el => observer.observe(el));
+
+  // ─── COUNTER ANIMATION
+  function animateCount(el, target, suffix = '') {
+    let cur = 0;
+    const step = target / 60;
+    const t = setInterval(() => {
+      cur = Math.min(cur + step, target);
+      el.textContent = Math.floor(cur) + suffix;
+      if (cur >= target) clearInterval(t);
+    }, 20);
+  }
+  const statsObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const nums = e.target.querySelectorAll('.stat-num');
+        nums.forEach(n => {
+          const text = n.textContent;
+          const num  = parseInt(text.replace(/\D/g,''));
+          const suf  = text.replace(/[\d]/g,'');
+          const span = n.querySelector('span');
+          n.textContent = '0';
+          if (span) n.appendChild(span);
+          animateCount(n, num, '');
+          if (span) {
+            setTimeout(() => { if (!n.querySelector('span')) n.appendChild(span); }, 10);
+          }
+        });
+        statsObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.about-stats').forEach(el => statsObs.observe(el));
+
+  // ─── FORM SUBMIT
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.currentTarget;
+    btn.textContent = '✓ Verstuurd! Wij nemen snel contact op.';
+    btn.style.background = '#22c55e';
+    btn.style.boxShadow = '0 4px 24px rgba(34,197,94,.35)';
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>
